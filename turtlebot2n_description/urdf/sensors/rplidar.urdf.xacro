@@ -1,41 +1,40 @@
 <?xml version="1.0"?>
-<robot name="sensor_rplidar" xmlns:xacro="http://ros.org/wiki/xacro">
-	<xacro:include filename="$(find turtlebot2n_description)/urdf/turtlebot2n_gazebo.urdf.xacro"/>
-	<xacro:include filename="$(find turtlebot_description)/urdf/turtlebot_common_library.urdf.xacro"/>
-	
-	<xacro:macro name="sensor_rplidar" params="parent">
-  	<joint name="laser_joint" type="fixed">
-    	<axis xyz="0 1 0" /> <!-- this joint rotates around y axis, defined in the dae file -->
-		<origin xyz="0 0 0.4" rpy="0 0 ${M_PI}" />
-		<parent link="${parent}" />
-		<child link="laser" />
-	</joint>
+<robot name="rplidar" xmlns:xacro="http://ros.org/wiki/xacro">
+  <xacro:include filename="$(find turtlebot2n_description)/urdf/gazebo/laser_plugin.urdf.xacro"/>
 
-	<link name="laser">  <!-- frame name in tf tree -->
-		<visual>
-			<origin xyz="0 0 0" rpy="${M_PI*0.5} 0 ${M_PI*1.5}"/>
-			<geometry>
-				<mesh filename="package://turtlebot2n_description/meshes/sensors/rplidar.dae" scale="0.001 0.001 0.001"/>
-			</geometry>
-			<!--xacro:insert_block name="material_black"/-->
-		</visual>
-		<collision>
-			<origin xyz="0.0 0.0 0.0" rpy="${M_PI*0.5} 0 ${M_PI*1.5}"/>
-			<geometry>
-				<mesh filename="package://turtlebot2n_description/meshes/sensors/rplidar.dae" scale="0.001 0.001 0.001"/>
-			</geometry>
-	  	</collision>
-	    <inertial>
-			<mass value="0.564" />
-			<origin xyz="0 0 0" rpy="${M_PI*0.5} 0 ${M_PI*1.5}" />
-			<inertia ixx="0.003881243" ixy="0.0" ixz="0.0"
-			         iyy="0.000498940" iyz="0.0"
-			         izz="0.003879257" />
-	    </inertial>
-	</link>
+  <xacro:macro name="sensor_rplidar" params="parent">
+    <joint name="laser_joint" type="fixed">
+      <axis xyz="0 1 0" /> <!-- this joint rotates around y axis, defined in the dae file -->
+      <origin xyz="0 0 0.4" rpy="0 0 ${M_PI}" />
+      <parent link="${parent}" />
+      <child link="laser" />
+    </joint>
 
-    <!-- Enable laser defined in gazebo macro -->
-    <laser/>
+    <link name="laser">  <!-- frame name in tf tree -->
+      <visual>
+        <origin xyz="0 0 0" rpy="${M_PI*0.5} 0 ${M_PI*1.5}"/>
+        <geometry>
+          <mesh filename="package://turtlebot2n_description/meshes/sensors/rplidar.dae" scale="0.001 0.001 0.001"/>
+        </geometry>
+        <!--xacro:insert_block name="material_black"/-->
+      </visual>
+      <collision>
+        <origin xyz="0.0 0.0 0.0" rpy="${M_PI*0.5} 0 ${M_PI*1.5}"/>
+        <geometry>
+          <mesh filename="package://turtlebot2n_description/meshes/sensors/rplidar.dae" scale="0.001 0.001 0.001"/>
+        </geometry>
+      </collision>
+      <inertial>
+        <mass value="0.564" />
+        <origin xyz="0 0 0" rpy="${M_PI*0.5} 0 ${M_PI*1.5}" />
+        <inertia ixx="0.003881243" ixy="0.0" ixz="0.0"
+              iyy="0.000498940" iyz="0.0"
+              izz="0.003879257" />
+      </inertial>
+    </link>
 
-	</xacro:macro>
+    <!-- load gazebo settings for laser -->
+    <turtlebot_sim_laser/> <!-- defined in "laser_plugin" -->
+
+  </xacro:macro>
 </robot>
