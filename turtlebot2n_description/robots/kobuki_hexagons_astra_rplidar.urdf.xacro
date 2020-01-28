@@ -18,8 +18,8 @@
   <xacro:include filename="$(find turtlebot_description)/urdf/sensors/astra.urdf.xacro"/>
   <xacro:include filename="$(find turtlebot2n_description)/urdf/sensors/rplidar.urdf.xacro"/>
   
-  <kobuki/>
-  <stack_hexagons parent="base_link"/>
+  <kobuki/> <!-- expand kobuki macro into URDF with no param given -->
+  <stack_hexagons parent="base_link"/> <!-- expand stack macro into URDF with param parent=base_link -->
   <sensor_astra parent="base_link"/>
   <sensor_rplidar parent="base_link"/>
   

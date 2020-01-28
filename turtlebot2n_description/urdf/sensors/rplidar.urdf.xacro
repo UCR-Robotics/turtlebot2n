@@ -1,38 +1,41 @@
 <?xml version="1.0"?>
 <robot name="sensor_rplidar" xmlns:xacro="http://ros.org/wiki/xacro">
-	<xacro:include filename="$(find turtlebot_description)/urdf/turtlebot_gazebo.urdf.xacro"/>
-	<xacro:include filename="$(find turtlebot_description)/urdf/turtlebot_properties.urdf.xacro"/>
+	<xacro:include filename="$(find turtlebot2n_description)/urdf/turtlebot2n_gazebo.urdf.xacro"/>
+	<xacro:include filename="$(find turtlebot_description)/urdf/turtlebot_common_library.urdf.xacro"/>
 	
 	<xacro:macro name="sensor_rplidar" params="parent">
-  	<joint name="laser" type="fixed">
-		<origin xyz="0.180 0.00 0.040" rpy="0 0 0" />
+  	<joint name="laser_joint" type="fixed">
+    	<axis xyz="0 1 0" /> <!-- this joint rotates around y axis, defined in the dae file -->
+		<origin xyz="0 0 0.4" rpy="0 0 ${M_PI}" />
 		<parent link="${parent}" />
-		<child link="base_laser_link" />
+		<child link="laser" />
 	</joint>
 
-	<link name="base_laser_link">
+	<link name="laser">  <!-- frame name in tf tree -->
 		<visual>
-			<origin xyz="-0.0425 0.035 -0.040" rpy="1.570796327 0 0"/>
+			<origin xyz="0 0 0" rpy="${M_PI*0.5} 0 ${M_PI*1.5}"/>
 			<geometry>
-				<mesh filename="package://turtlebot2n_description/meshes/sensors/rplidar_a1.stl" scale="0.001 0.001 0.001"/>
+				<mesh filename="package://turtlebot2n_description/meshes/sensors/rplidar.dae" scale="0.001 0.001 0.001"/>
 			</geometry>
-			<material name="blue">
-				<color rgba="0 0 .8 1"/>
-			</material>
+			<!--xacro:insert_block name="material_black"/-->
 		</visual>
 		<collision>
-			<origin xyz="0.0 0.0 0.0" rpy="0 0 0"/>
+			<origin xyz="0.0 0.0 0.0" rpy="${M_PI*0.5} 0 ${M_PI*1.5}"/>
 			<geometry>
-		  	      <box size="0.07271 0.27794 0.073"/>
+				<mesh filename="package://turtlebot2n_description/meshes/sensors/rplidar.dae" scale="0.001 0.001 0.001"/>
 			</geometry>
 	  	</collision>
 	    <inertial>
 			<mass value="0.564" />
-			<origin xyz="0 0 0" />
+			<origin xyz="0 0 0" rpy="${M_PI*0.5} 0 ${M_PI*1.5}" />
 			<inertia ixx="0.003881243" ixy="0.0" ixz="0.0"
 			         iyy="0.000498940" iyz="0.0"
 			         izz="0.003879257" />
 	    </inertial>
 	</link>
+
+    <!-- Enable laser defined in gazebo macro -->
+    <laser/>
+
 	</xacro:macro>
 </robot>
