@@ -5,7 +5,7 @@
   <xacro:macro name="sensor_rplidar" params="parent">
     <joint name="laser_joint" type="fixed">
       <axis xyz="0 1 0" /> <!-- this joint rotates around y axis, defined in the dae file -->
-      <origin xyz="0 0 0.4" rpy="0 0 ${M_PI}" />
+      <origin xyz="0 0 0.19" rpy="0 0 ${M_PI}" />
       <parent link="${parent}" />
       <child link="laser" />
     </joint>
